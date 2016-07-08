@@ -1,4 +1,4 @@
-module Citybox
+module CityboxApi
 	# module for regions services
 	module Regions
 	  @server_url = "http://b2b.correos.cl:8008/ServicioRegionYComunasExterno/cch/ws/distribucionGeografica/externo/implementacion/ServicioExternoRegionYComunas.asmx"
