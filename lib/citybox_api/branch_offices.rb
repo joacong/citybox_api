@@ -1,16 +1,20 @@
 module CityboxApi
 	# module for branch offices services
-	module BranchOffices
-		@server_url = "http://b2b.correos.cl:8008/ServicioListadoSucursalesExterno/cch/ws/distribucionGeografica/implementacion/ServicioExternoListarSucursales.asmx"
-
+	class BranchOffices
+		def initialize
+			raise CityboxApi::INVALID_CREDENTIALS if CityboxApi.configuration.key == nil
+			@server_url = "http://b2b.correos.cl:8008/ServicioListadoSucursalesExterno/cch/ws/distribucionGeografica/implementacion/ServicioExternoListarSucursales.asmx"
+	  		@user = CityboxApi.configuration.user
+	  		@password = CityboxApi.configuration.key
+		end
 		# list all branch offices
-		def self.list_branch_offices
+		def list_branch_offices
 			xml = "<?xml version='1.0' encoding='utf-8'?>
 					<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>
 					  <soap:Body>
 					    <listarTodasLasSucursales xmlns='http://tempuri.org/'>
-					      <usuario>#{Citybox.user}</usuario>
-					      <contrasena>#{Citybox.password}</contrasena>
+					      <usuario>#{@user}</usuario>
+					      <contrasena>#{@password}</contrasena>
 					    </listarTodasLasSucursales>
 					  </soap:Body>
 					</soap:Envelope>"
@@ -26,13 +30,13 @@ module CityboxApi
 		end
 
 		# list all branch offices for commune with id 'commune_id'
-		def self.list_branch_offices_by_commune commune_id
+		def list_branch_offices_by_commune commune_id
 			xml = "<?xml version='1.0' encoding='utf-8'?>
 					<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>
 					  <soap:Body>
 					    <listarSucursalesSegunComuna xmlns='http://tempuri.org/'>
-					      <usuario>#{Citybox.user}</usuario>
-					      <contrasena>#{Citybox.password}</contrasena>
+					      <usuario>#{@user}</usuario>
+					      <contrasena>#{@password}</contrasena>
 					      <codigoComuna>#{commune_id}</codigoComuna>
 					    </listarSucursalesSegunComuna>
 					  </soap:Body>
@@ -49,14 +53,14 @@ module CityboxApi
 		end
 
 		# list all branch offices near to a especific location
-		def self.list_branch_offices_near_to opts={}
+		def list_branch_offices_near_to opts={}
 			request_id = rand(10000)
 			xml = "<?xml version='1.0' encoding='utf-8'?>
 					<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>
 					  <soap:Body>
 					    <consultaSucursalMasCercana xmlns='http://tempuri.org/'>
-					      <usuario>#{Citybox.user}</usuario>
-					      <contrasena>#{Citybox.password}</contrasena>
+					      <usuario>#{@user}</usuario>
+					      <contrasena>#{@password}</contrasena>
 					      <id>#{request_id}</id>
 					      <nombreCalle>#{opts[:street_name]}</nombreCalle>
 					      <numeroCalle>#{opts[:street_number]}</numeroCalle>

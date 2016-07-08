@@ -21,8 +21,34 @@ Or install it yourself as:
     $ gem install citybox_api
 
 ## Usage
+This is a Ruby wrapper for Citybox SOAP API
 
-TODO: Write usage instructions here
+Configure CityboxApi
+
+	CityboxApi.configure do |config|
+		config.user  = your_user
+		config.key = your_password
+	end
+
+In this version of citybox_api gem you can user 2 API services:
+* Regions Services
+* Branch Offices Services
+
+- Regions Services:
+
+	@regions_services = CityboxApi::Regions.new
+	
+	@regions_services.list_regions # return a list with all availables regions
+	@regions_services.list_comunes # return a list with all availables communes
+	@regions_services.list_comunes_by_region(region_id) # return a list with all availables communes for region with id 'region_id'
+
+- Branch Offices Services
+	
+	@branch_offices_services = CityboxApi::BranchOffices.new
+	
+	@branch_offices_services.list_branch_offices # return a list with all availables branch offices
+	@branch_offices_services.list_branch_offices_by_commune(commune_id) # return a list with all availables branch offices for commue with id 'commune_id'
+	@branch_offices_services.list_branch_offices_near_to(street_name: '', street_number: '', commune_name: '') # return a list with all  availables branch offices near to especific location
 
 ## Development
 

@@ -1,5 +1,14 @@
 require "citybox_api/version"
+require 'rest-client'
+require 'crack'
+
+require 'citybox_api/regions'
+require 'citybox_api/branch_offices'
+require 'citybox_api/configuration'
+
 
 module CityboxApi
-  # Your code goes here...
+  	# Credentials for API
+	INVALID_CREDENTIALS = "Key cant be blank!"
+  	CityboxApi.configure
 end
