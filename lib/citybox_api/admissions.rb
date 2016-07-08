@@ -19,6 +19,13 @@ module CityboxApi
 			opts[:documents_number] ||= 0
 			opts[:secure_payment] ||= "N"
 
+			#check params
+			[
+				:admission_id, :sender_code, :sender_street, :sender_commune, :sender_contact_person, :receiver_name,
+				:receiver_street, :receiver_commune, :service_code, :pieces_number, :kilograms, :reference_number,
+				:declared_import_value, :payment_type
+			].each{|p| raise "#{p} can't be blank" unless opts[p]}
+
 
 		  	xml = "<?xml version='1.0' encoding='utf-8'?>
 					<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>
@@ -29,20 +36,20 @@ module CityboxApi
 					      <admisionTo>
 					        <ExtensionData />
 					        <CodigoAdmision>#{opts[:admission_id]}</CodigoAdmision>
-					        <ClienteRemitente>#{opts[:sender_code}</ClienteRemitente>
+					        <ClienteRemitente>#{opts[:sender_code]}</ClienteRemitente>
 					        <CentroRemitente></CentroRemitente>
 					        <NombreRemitente>#{opts[:sender_name]}</NombreRemitente>
-					        <DireccionRemitente>#{opts[:sender_street}</DireccionRemitente>
+					        <DireccionRemitente>#{opts[:sender_street]}</DireccionRemitente>
 					        <PaisRemitente>#{opts[:sender_country]}</PaisRemitente>
 					        <CodigoPostalRemitente></CodigoPostalRemitente>
-					        <ComunaRemitente>#{opts[:sender_comune]}</ComunaRemitente>
+					        <ComunaRemitente>#{opts[:sender_commune]}</ComunaRemitente>
 					        <RutRemitente>#{opts[:sender_rut]}</RutRemitente>
 					        <PersonaContactoRemitente>#{opts[:sender_contact_person]}</PersonaContactoRemitente>
 					        <TelefonoContactoRemitente>#{opts[:sender_contact_phone]}</TelefonoContactoRemitente>
 					        <ClienteDestinatario></ClienteDestinatario>
 					        <CentroDestinatario></CentroDestinatario>
 					        <NombreDestinatario>#{opts[:receiver_name]}</NombreDestinatario>
-					        <DireccionDestinatario>#{opts[:recevier_street]}</DireccionDestinatario>
+					        <DireccionDestinatario>#{opts[:receiver_street]}</DireccionDestinatario>
 					        <PaisDestinatario>#{opts[:receiver_country]}</PaisDestinatario>
 					        <CodigoPostalDestinatario></CodigoPostalDestinatario>
 					        <ComunaDestinatario>#{opts[:receiver_commune]}</ComunaDestinatario>
@@ -72,7 +79,7 @@ module CityboxApi
 			begin
 				xml_response = RestClient.post @server_url, xml, content_type: "text/xml"
 				json_response = Crack::XML.parse(xml_response)
-				json_response["soap:Envelope"]["soap:Body"]["listarTodasLasRegionesResponse"]["listarTodasLasRegionesResult"]["RegionTO"]
+				json_response["soap:Envelope"]["soap:Body"]["admitirEnvioResponse"]["admitirEnvioResult"]
 			rescue => e
 				puts e
 				return nil
