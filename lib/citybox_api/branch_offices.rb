@@ -23,8 +23,12 @@ module CityboxApi
 				xml_response = RestClient.post @server_url, xml, content_type: "text/xml"
 				json_response = Crack::XML.parse(xml_response)
 				json_response["soap:Envelope"]["soap:Body"]["listarTodasLasSucursalesResponse"]["listarTodasLasSucursalesResult"]["SucursalTO"]
-			rescue => e
-				puts e
+			rescue => error
+				json_response = Crack::XML.parse(error.response)
+				fault_code = json_response["soap:Envelope"]["soap:Body"]["soap:Fault"]["faultcode"]
+				fault_string = json_response["soap:Envelope"]["soap:Body"]["soap:Fault"]["faultstring"]
+				fault = {faultCode: fault_code, fault_string: fault_string}
+				puts fault
 				return nil
 			end
 		end
@@ -46,8 +50,12 @@ module CityboxApi
 				xml_response = RestClient.post @server_url, xml, content_type: "text/xml"
 				json_response = Crack::XML.parse(xml_response)
 				json_response["soap:Envelope"]["soap:Body"]["listarSucursalesSegunComunaResponse"]["listarSucursalesSegunComunaResult"]["SucursalTO"]
-			rescue => e
-				puts e
+			rescue => error
+				json_response = Crack::XML.parse(error.response)
+				fault_code = json_response["soap:Envelope"]["soap:Body"]["soap:Fault"]["faultcode"]
+				fault_string = json_response["soap:Envelope"]["soap:Body"]["soap:Fault"]["faultstring"]
+				fault = {faultCode: fault_code, fault_string: fault_string}
+				puts fault
 				return nil
 			end
 		end
@@ -76,8 +84,12 @@ module CityboxApi
 				xml_response = RestClient.post @server_url, xml, content_type: "text/xml"
 				json_response = Crack::XML.parse(xml_response)
 				json_response["soap:Envelope"]["soap:Body"]["consultaSucursalMasCercanaResponse"]["consultaSucursalMasCercanaResult"]
-			rescue => e
-				puts e
+			rescue => error
+				json_response = Crack::XML.parse(error.response)
+				fault_code = json_response["soap:Envelope"]["soap:Body"]["soap:Fault"]["faultcode"]
+				fault_string = json_response["soap:Envelope"]["soap:Body"]["soap:Fault"]["faultstring"]
+				fault = {faultCode: fault_code, fault_string: fault_string}
+				puts fault
 				return nil
 			end
 		end
