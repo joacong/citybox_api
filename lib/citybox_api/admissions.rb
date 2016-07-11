@@ -37,7 +37,6 @@ module CityboxApi
 					        <ExtensionData />
 					        <CodigoAdmision>#{opts[:admission_id]}</CodigoAdmision>
 					        <ClienteRemitente>#{opts[:sender_code]}</ClienteRemitente>
-					        <CentroRemitente></CentroRemitente>
 					        <NombreRemitente>#{opts[:sender_name]}</NombreRemitente>
 					        <DireccionRemitente>#{opts[:sender_street]}</DireccionRemitente>
 					        <PaisRemitente>#{opts[:sender_country]}</PaisRemitente>
@@ -55,33 +54,35 @@ module CityboxApi
 					        <ComunaDestinatario>#{opts[:receiver_commune]}</ComunaDestinatario>
 					        <RutDestinatario>#{opts[:receiver_rut]}</RutDestinatario>
 					        <PersonaContactoDestinatario>#{opts[:receiver_contact_person]}</PersonaContactoDestinatario>
-					        <TelefonoContactoDestinatario>#{opts[:receiver_contact_phone]}</TelefonoContactoDestinatario>
+					        <TelefonoContactoDestinatario>#{opts[:receiver_contact_phone].to_i}</TelefonoContactoDestinatario>
 					        <CodigoServicio>#{opts[:service_code]}</CodigoServicio>
-					        <NumeroTotalPiezas>#{opts[:pieces_number]}</NumeroTotalPiezas>
+					        <NumeroTotalPiezas>#{opts[:pieces_number].to_i}</NumeroTotalPiezas>
 					        <Kilos>#{opts[:kilograms]}</Kilos>
-					        <Volumen>#{opts[:volume]}</Volumen>
+					        <Volumen>#{opts[:volume].to_i}</Volumen>
 					        <NumeroReferencia>#{opts[:reference_number]}</NumeroReferencia>
-					        <ImporteReembolso></ImporteReembolso>
-					        <ImporteValorDeclarado>#{opts[:declared_import_value]}</ImporteValorDeclarado>
+					        <ImporteValorDeclarado>#{opts[:declared_import_value].to_i}</ImporteValorDeclarado>
 					        <TipoPortes>#{opts[:payment_type]}</TipoPortes>
 					        <Observaciones>#{opts[:observations]}</Observaciones>
 					        <Observaciones2></Observaciones2>
 					        <EmailDestino>#{opts[:destination_email]}</EmailDestino>
 					        <TipoMercancia>#{opts[:commodity_type]}</TipoMercancia>
 					        <DevolucionConforme>#{opts[:success_return]}</DevolucionConforme>
-					        <NumeroDocumentos>#{opts[:documents_number]}</NumeroDocumentos>
+					        <NumeroDocumentos>#{opts[:documents_number].to_i}</NumeroDocumentos>
 					        <PagoSeguro>#{opts[:secure_payment]}</PagoSeguro>
 					      </admisionTo>
 					    </admitirEnvio>
 					  </soap:Body>
 					</soap:Envelope>"
-
 			begin
 				xml_response = RestClient.post @server_url, xml, content_type: "text/xml"
 				json_response = Crack::XML.parse(xml_response)
 				json_response["soap:Envelope"]["soap:Body"]["admitirEnvioResponse"]["admitirEnvioResult"]
-			rescue => e
-				puts e
+			rescue => error
+				json_response = Crack::XML.parse(error.response)
+				fault_code = json_response["soap:Envelope"]["soap:Body"]["soap:Fault"]["faultcode"]
+				fault_string = json_response["soap:Envelope"]["soap:Body"]["soap:Fault"]["faultstring"]
+				fault = {faultCode: fault_code, fault_string: fault_string}
+				puts fault
 				return nil
 			end
 		end
