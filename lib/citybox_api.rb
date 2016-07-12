@@ -5,8 +5,9 @@ require 'crack'
 require 'citybox_api/regions'
 require 'citybox_api/branch_offices'
 require 'citybox_api/configuration'
-require "citybox_api/shipments"
+require 'citybox_api/shipments'
 require 'citybox_api/take_ups'
+require 'citybox_api/tariff'
 
 module CityboxApi
   	# Credentials for API
