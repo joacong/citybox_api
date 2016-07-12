@@ -23,4 +23,8 @@ module CityboxApi
 		puts fault
 		return nil
   	end
+
+  	def self.check_params params, opts
+  		params.each{|p| raise "#{p} can't be blank" unless opts[p]}
+  	end
 end
