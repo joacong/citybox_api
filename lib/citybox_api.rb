@@ -6,6 +6,7 @@ require 'citybox_api/regions'
 require 'citybox_api/branch_offices'
 require 'citybox_api/configuration'
 require "citybox_api/admissions"
+require "citybox_api/shipments"
 
 module CityboxApi
   	# Credentials for API
