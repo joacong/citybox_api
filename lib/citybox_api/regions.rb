@@ -25,12 +25,7 @@ module CityboxApi
 				json_response = Crack::XML.parse(xml_response)
 				json_response["soap:Envelope"]["soap:Body"]["listarTodasLasRegionesResponse"]["listarTodasLasRegionesResult"]["RegionTO"]
 			rescue => error
-				json_response = Crack::XML.parse(error.response)
-				fault_code = json_response["soap:Envelope"]["soap:Body"]["soap:Fault"]["faultcode"]
-				fault_string = json_response["soap:Envelope"]["soap:Body"]["soap:Fault"]["faultstring"]
-				fault = {faultCode: fault_code, fault_string: fault_string}
-				puts fault
-				return nil
+				return CityboxApi.catch_error(error)
 			end
 		end
 
@@ -51,12 +46,7 @@ module CityboxApi
 				json_response = Crack::XML.parse(xml_response)
 				json_response["soap:Envelope"]["soap:Body"]["listarTodasLasComunasResponse"]["listarTodasLasComunasResult"]["ComunaTO"]
 			rescue => error
-				json_response = Crack::XML.parse(error.response)
-				fault_code = json_response["soap:Envelope"]["soap:Body"]["soap:Fault"]["faultcode"]
-				fault_string = json_response["soap:Envelope"]["soap:Body"]["soap:Fault"]["faultstring"]
-				fault = {faultCode: fault_code, fault_string: fault_string}
-				puts fault
-				return nil
+				return CityboxApi.catch_error(error)
 			end
 		end
 
@@ -78,12 +68,7 @@ module CityboxApi
 				json_response = Crack::XML.parse(xml_response)
 				json_response["soap:Envelope"]["soap:Body"]["listarComunasSegunRegionResponse"]["listarComunasSegunRegionResult"]["ComunaTO"]
 			rescue => error
-				json_response = Crack::XML.parse(error.response)
-				fault_code = json_response["soap:Envelope"]["soap:Body"]["soap:Fault"]["faultcode"]
-				fault_string = json_response["soap:Envelope"]["soap:Body"]["soap:Fault"]["faultstring"]
-				fault = {faultCode: fault_code, fault_string: fault_string}
-				puts fault
-				return nil
+				return CityboxApi.catch_error(error)
 			end
 		end
 	end
