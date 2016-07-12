@@ -60,6 +60,7 @@ module CityboxApi
 					        <Kilos>#{opts[:kilograms]}</Kilos>
 					        <Volumen>#{opts[:volume].to_i}</Volumen>
 					        <NumeroReferencia>#{opts[:reference_number]}</NumeroReferencia>
+					        <ImporteReembolso>0</ImporteReembolso>
 					        <ImporteValorDeclarado>#{opts[:declared_import_value].to_i}</ImporteValorDeclarado>
 					        <TipoPortes>#{opts[:payment_type]}</TipoPortes>
 					        <Observaciones>#{opts[:observations]}</Observaciones>
