@@ -21,7 +21,7 @@ module CityboxApi
 
 			#check params
 			[
-				:admission_id, :sender_code, :sender_street, :sender_commune, :sender_contact_person, :receiver_name,
+				:admission_code, :sender_code, :sender_street, :sender_commune, :sender_contact_person, :receiver_name,
 				:receiver_street, :receiver_commune, :service_code, :pieces_number, :kilograms, :reference_number,
 				:declared_import_value, :payment_type
 			].each{|p| raise "#{p} can't be blank" unless opts[p]}
@@ -35,7 +35,7 @@ module CityboxApi
 					      <contrasena>#{@password}</contrasena>
 					      <admisionTo>
 					        <ExtensionData />
-					        <CodigoAdmision>#{opts[:admission_id]}</CodigoAdmision>
+					        <CodigoAdmision>#{opts[:admission_code]}</CodigoAdmision>
 					        <ClienteRemitente>#{opts[:sender_code]}</ClienteRemitente>
 					        <NombreRemitente>#{opts[:sender_name]}</NombreRemitente>
 					        <DireccionRemitente>#{opts[:sender_street]}</DireccionRemitente>
