@@ -41,9 +41,7 @@ module CityboxApi
 	  		server_url = "http://b2b.correos.cl:8008/ServicioAnulacionExterno/cch/ws/enviosCEP/externo/implementacion/ServicioExternoAnulacionEnvio.asmx"
 
 			#check params
-			[
-				:shipment_number, :admission_code, :sender_code
-			].each{|p| raise "#{p} can't be blank" unless opts[p]}
+			CityboxApi.check_params [ :shipment_number, :admission_code, :sender_code ], opts
 
 
 			xml = "<?xml version='1.0' encoding='utf-8'?>
@@ -81,11 +79,11 @@ module CityboxApi
 			opts[:secure_payment] ||= "N"
 
 			#check params
-			[
+			CityboxApi.check_params  [
 				:admission_code, :sender_code, :sender_street, :sender_commune, :sender_contact_person, :receiver_name,
 				:receiver_street, :receiver_commune, :service_code, :pieces_number, :kilograms, :reference_number,
 				:declared_import_value, :payment_type
-			].each{|p| raise "#{p} can't be blank" unless opts[p]}
+			], opts
 
 			return opts
 		end
