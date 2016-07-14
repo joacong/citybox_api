@@ -8,6 +8,7 @@ require 'citybox_api/configuration'
 require 'citybox_api/shipments'
 require 'citybox_api/take_ups'
 require 'citybox_api/tariff'
+require 'citybox_api/utilities'
 
 module CityboxApi
   	# Credentials for API
@@ -22,5 +23,9 @@ module CityboxApi
 		fault = {faultCode: fault_code, fault_string: fault_string}
 		puts fault
 		return nil
+  	end
+
+  	def self.check_params params, opts
+  		params.each{|p| raise "#{p} can't be blank" unless opts[p]}
   	end
 end

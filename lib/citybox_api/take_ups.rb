@@ -13,9 +13,8 @@ module CityboxApi
 			opts[:sender_country] ||= "056"
 
 			# check params
-			[
-				:admission_code, :sender_code, :sender_contact_person, :sender_contact_phone, :take_up_date, :take_up_from_hour, :take_up_to_hour
-			].each{|p| raise "#{p} can't be blank" unless opts[p]}
+			CityboxApi.check_params [ :admission_code, :sender_code, :sender_contact_person, :sender_contact_phone, :take_up_date,
+									  :take_up_from_hour, :take_up_to_hour ], opts
 
 			# format for date: aaaa-mm-dd
 			xml = "<?xml version='1.0' encoding='utf-8'?>
