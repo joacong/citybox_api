@@ -7,7 +7,7 @@ module CityboxApi
 	  		@password = CityboxApi.configuration.key
 		end
 
-		# sent an allow shipping request
+		# sent an allow shipping request =>  'admitirEnvio' service
 		def allow_shipment opts={}
 	  		server_url = "http://b2b.correos.cl:8008/ServicioAdmisionCEPExterno/cch/ws/enviosCEP/externo/implementacion/ServicioExternoAdmisionCEP.asmx"
 			opts = check_shipment_opts opts
@@ -22,7 +22,7 @@ module CityboxApi
 			end
 		end
 
-
+		# send a validate shipment request => 'validarEnvio' service
 		def validate_shipment opts={}
 	  		server_url = "http://b2b.correos.cl:8008/ServicioValidacionAdmisionCEPExterno/cch/ws/enviosCEP/externo/implementacion/ServicioExternoValidaAdmisionCEP.asmx"
 			opts = check_shipment_opts opts
@@ -37,6 +37,7 @@ module CityboxApi
 			end
 		end
 
+		# send a cancel shipment request => 'anularEnvio' service
 		def cancel_shipment opts={}
 	  		server_url = "http://b2b.correos.cl:8008/ServicioAnulacionExterno/cch/ws/enviosCEP/externo/implementacion/ServicioExternoAnulacionEnvio.asmx"
 

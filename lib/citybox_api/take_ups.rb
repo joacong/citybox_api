@@ -8,6 +8,7 @@ module CityboxApi
 	  		@server_url = "http://b2b.correos.cl:8008/ServicioRetiroEnvioExterno/cch/ws/retirosCEP/externo/implementacion/ServicioExternoRetiro.asmx"
 		end
 
+		# send a register take up request => 'reistrarRetiro' service
 		def register opts={}
 			# default values
 			opts[:sender_country] ||= "056"

@@ -7,6 +7,7 @@ module CityboxApi
 	  		@password = CityboxApi.configuration.key
 		end
 
+		# list available cityboxes => 'listarCityboxDisponibles' service
 		def list_cityboxes
 			server_url = "http://b2b.correos.cl:8008/ServicioCityboxExterno/cch/ws/citybox/externo/implementacion/ServicioCityboxExterno.asmx"
 			xml = "<?xml version='1.0' encoding='utf-8'?>
@@ -28,6 +29,7 @@ module CityboxApi
 			end
 		end
 
+		# list master products => 'listarMaestroProductos' service
 		def list_master_products
 			server_url = "http://b2b.correos.cl:8008/ServicioProductosCorreosExterno/cch/ws/ProductosCorreos/externo/implementacion/ServicioExternoProductoCorreos.asmx"
 			xml = "<?xml version='1.0' encoding='utf-8'?>
@@ -49,6 +51,7 @@ module CityboxApi
 			end
 		end
 
+		# see scl documents => 'consultaDocumentosSCL' service
 		def see_scl_documents shipment_number
 			server_url = "http://b2b.correos.cl:8008/ServicioConsultaAvisoDocumentoSCLExterno/cch/ws/externo/implementacion/ServicioExternoConsultaAvisoDocumentoSCL.asmx"
 			xml = "<?xml version='1.0' encoding='utf-8'?>
@@ -71,6 +74,7 @@ module CityboxApi
 			end
 		end
 
+		# see fivps => 'consultaFIVPS' service
 		def see_fivps shipment_number
 			server_url = "http://b2b.correos.cl:8008/ServicioConsultaFivpsExterno/cch/ws/aduana/externo/implementacion/ServicioExternoConsultaFivps.asmx"
 			xml = "<?xml version='1.0' encoding='utf-8'?>
@@ -93,6 +97,7 @@ module CityboxApi
 			end
 		end
 
+		# return a hash with normalized address => 'normalizarDireccion' service
 		def normalize_address opts={}
 			server_url = "http://b2b.correos.cl:8008/ServicioNormalizacionExterno/cch/ws/distribucionGeografica/externo/implementacion/ServicioExternoNormalizacion.asmx"
 			# default values
@@ -123,6 +128,7 @@ module CityboxApi
 			end
 		end
 
+		# see clain status => 'consultaEstadoDeReclamo' service
 		def claim_status claim_number
 			server_url = "http://b2b.correos.cl:8008/ServicioEstadoDeReclamosExterno/cch/ws/reclamos/implementacion/ServicioExternoEstadoDeReclamos.asmx"
 			xml = "<?xml version='1.0' encoding='utf-8'?>
