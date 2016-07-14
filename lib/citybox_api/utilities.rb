@@ -51,6 +51,28 @@ module CityboxApi
 			end
 		end
 
+		# list countries => 'listarTodosLosPaises' service
+		def list_countries
+			server_url = "http://b2b.correos.cl:8008/ServicioListadoPaisesExterno/cch/ws/distribucionGeografica/externo/implementacion/ServicioExternoListadoPaises.asmx"
+			xml = "<?xml version='1.0' encoding='utf-8'?>
+					<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>
+					  <soap:Body>
+					    <listarTodosLosPaises xmlns='http://tempuri.org/'>
+					      <usuario>#{@user}</usuario>
+					      <contrasena>#{@password}</contrasena>
+					    </listarTodosLosPaises>
+					  </soap:Body>
+					</soap:Envelope>"
+
+			begin
+				xml_response = RestClient.post server_url, xml, content_type: "text/xml"
+				json_response = Crack::XML.parse(xml_response)
+				json_response["soap:Envelope"]["soap:Body"]["listarTodosLosPaisesResponse"]["listarTodosLosPaisesResult"]["PaisTO"]
+			rescue => error
+				return CityboxApi.catch_error(error)
+			end
+		end
+
 		# see scl documents => 'consultaDocumentosSCL' service
 		def see_scl_documents shipment_number
 			server_url = "http://b2b.correos.cl:8008/ServicioConsultaAvisoDocumentoSCLExterno/cch/ws/externo/implementacion/ServicioExternoConsultaAvisoDocumentoSCL.asmx"

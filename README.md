@@ -30,7 +30,7 @@ Configure CityboxApi
 		config.key = your_password
 	end
 
-In this version of citybox_api gem you can use 20 API services:
+In this version of citybox_api gem you can use all the 21 API services:
 
 - Regions Services:
 
@@ -88,13 +88,17 @@ In this version of citybox_api gem you can use 20 API services:
 	
 	16) @utilities.list_master_products # list master products => 'listarMaestroProductos' service
 	
-	17) @utilities.see_scl_documents # see scl documents => 'consultaDocumentosSCL' service
+	17) @utilities.list_master_countries # list countries => 'listarTodosLosPaises' service
 	
-	18) @utilities.see_fivps # see fivps => 'consultaFIVPS' service
+	18) @utilities.see_scl_documents # see scl documents => 'consultaDocumentosSCL' service
 	
-	19) @utilities.normalize_address # return a hash with normalized address => 'normalizarDireccion' service
+	19) @utilities.see_fivps # see fivps => 'consultaFIVPS' service
 	
-	20) @utilities.claim_status # see clain status => 'consultaEstadoDeReclamo' service
+	20) @utilities.normalize_address # return a hash with normalized address => 'normalizarDireccion' service
+	
+	21) @utilities.claim_status # see clain status => 'consultaEstadoDeReclamo' service
+
+
 
 
 
