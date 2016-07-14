@@ -88,7 +88,7 @@ In this version of citybox_api gem you can use all the 21 API services:
 	
 	16) @utilities.list_master_products # list master products => 'listarMaestroProductos' service
 	
-	17) @utilities.list_master_countries # list countries => 'listarTodosLosPaises' service
+	17) @utilities.list_countries # list countries => 'listarTodosLosPaises' service
 	
 	18) @utilities.see_scl_documents # see scl documents => 'consultaDocumentosSCL' service
 	
