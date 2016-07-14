@@ -8,6 +8,7 @@ module CityboxApi
 	  		@server_url = "http://b2b.correos.cl:8008/ServicioTarificacionCEPEmpresasExterno/cch/ws/tarificacionCEP/externo/implementacion/ExternoTarificacion.asmx"
 		end
 
+		# send an apply tariff to person request => 'aplicarTarifaPersona' service
 		def apply_tariff_to_person opts={}
 	  		server_url = "http://b2b.correos.cl:8008/ServicioTarificadorPersonasExterno/cch/ws/tarificacion/externo/implementacion/ServicioExternoTarificadorPersonas.asmx"
 
@@ -39,6 +40,7 @@ module CityboxApi
 			end
 		end
 
+		# see scope => 'consultarCobertura' service
 		def see_scope opts={}
 			# default values
 			opts[:sender_country] ||= "056" # chilean by default
@@ -82,6 +84,7 @@ module CityboxApi
 			end
 		end
 
+		# see scope by product => 'consultarCoberturaPorProducto' service
 		def see_scope_by_product opts={}
 			# default values
 			opts[:sender_country] ||= "056" # chilean by default
@@ -126,6 +129,7 @@ module CityboxApi
 			end
 		end
 
+		# see products by client => 'consultaProductosPorCliente' service
 		def see_products_by_client
 			xml = "<?xml version='1.0' encoding='utf-8'?>
 					<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>
