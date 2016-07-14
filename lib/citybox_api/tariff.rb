@@ -81,5 +81,69 @@ module CityboxApi
 				return CityboxApi.catch_error(error)
 			end
 		end
+
+		def see_scope_by_product opts={}
+			# default values
+			opts[:sender_country] ||= "056" # chilean by default
+			opts[:receiver_country] ||= "056" # chilean by default
+			opts[:insured_import_value] ||= "NO"
+
+			# check params
+			CityboxApi.check_params [ :service_code, :sender_country, :sender_commune, :receiver_country, :receiver_commune, :payment_type, :number_of_pieces, :kilograms ], opts
+
+			xml = "<?xml version='1.0' encoding='utf-8'?>
+					<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>
+					  <soap:Body>
+					    <consultaCoberturaPorProducto xmlns='http://tempuri.org/'>
+					      <usuario>#{@user}</usuario>
+					      <contrasena>#{@password}</contrasena>
+					      <consultaCobertura>
+					        <ExtensionData />
+					        <CodigoPostalDestinatario>#{opts[:receiver_postal_code]}</CodigoPostalDestinatario>
+					        <CodigoPostalRemitente>#{opts[:sender_postal_code]}</CodigoPostalRemitente>
+					        <CodigoServicio>#{opts[:service_code]}</CodigoServicio>
+					        <ComunaDestino>#{opts[:receiver_commune]}</ComunaDestino>
+					        <ComunaRemitente>#{opts[:sender_commune]}</ComunaRemitente>
+					        <ImporteReembolso>#{opts[:import_refund]}</ImporteReembolso>
+					        <ImporteValorAsegurado>#{opts[:insured_import_value]}</ImporteValorAsegurado>
+					        <Kilos>#{opts[:kilograms]}</Kilos>
+					        <NumeroTotalPieza>#{opts[:number_of_pieces]}</NumeroTotalPieza>
+					        <PaisDestinatario>#{opts[:receiver_country]}</PaisDestinatario>
+					        <PaisRemitente>#{opts[:sender_country]}</PaisRemitente>
+					        <TipoPortes>#{opts[:payment_type]}</TipoPortes>
+					        <Volumen>#{opts[:volume]}</Volumen>
+					      </consultaCobertura>
+					    </consultaCoberturaPorProducto>
+					  </soap:Body>
+					</soap:Envelope>"
+
+			begin
+				xml_response = RestClient.post @server_url, xml, content_type: "text/xml"
+				json_response = Crack::XML.parse(xml_response)
+				json_response["soap:Envelope"]["soap:Body"]["consultaCoberturaPorProductoResponse"]["consultaCoberturaPorProductoResult"]
+			rescue => error
+				return CityboxApi.catch_error(error)
+			end
+		end
+
+		def see_products_by_client
+			xml = "<?xml version='1.0' encoding='utf-8'?>
+					<soap:Envelope xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'>
+					  <soap:Body>
+					    <consultaProductosPorCliente xmlns='http://tempuri.org/'>
+					      <usuario>#{@user}</usuario>
+					      <contrasena>#{@password}</contrasena>
+					    </consultaProductosPorCliente>
+					  </soap:Body>
+					</soap:Envelope>"
+
+			begin
+				xml_response = RestClient.post @server_url, xml, content_type: "text/xml"
+				json_response = Crack::XML.parse(xml_response)
+				json_response["soap:Envelope"]["soap:Body"]["consultaProductosPorClienteResponse"]["consultaProductosPorClienteResult"]["ProductoTo"]
+			rescue => error
+				return CityboxApi.catch_error(error)
+			end
+		end
 	end
 end

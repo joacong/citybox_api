@@ -8,6 +8,7 @@ require 'citybox_api/configuration'
 require 'citybox_api/shipments'
 require 'citybox_api/take_ups'
 require 'citybox_api/tariff'
+require 'citybox_api/utilities'
 
 module CityboxApi
   	# Credentials for API
